@@ -25,22 +25,31 @@
 
 #include "HX711.h" //This library can be obtained here http://librarymanager/All#Avia_HX711
 
-#define calibration_factor -20550.0 //This value is obtained using the SparkFun_HX711_Calibration sketch
-#define zero_factor 758839 //This large value is obtained using the SparkFun_HX711_Calibration sketch
+#define calibration_factor1 -20550.0 //This value is obtained using the SparkFun_HX711_Calibration sketch
+#define zero_factor1 758839 //This large value is obtained using the SparkFun_HX711_Calibration sketch
 
-#define LOADCELL_DOUT_PIN  4
-#define LOADCELL_SCK_PIN  5
+#define calibration_factor2  
+#define zero_factor2 
+
+#define  LOADCELL_DOUT_PIN1  4
+#define  LOADCELL_SCK_PIN1  5
+#define  LOADCELL_DOUT_PIN2  6
+#define  LOADCELL_SCK_PIN12  7
+
 
 HX711 scale;
 
 void setup() {
   Serial.begin(9600);
 
-  scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
+  scale.begin(LOADCELL_DOUT_PIN1,LOADCELL_SCK_PIN1);
+  scale.begin(LOADCELL_DOUT_PIN2,LOADCELL_SCK_PIN2);
   scale.set_scale(calibration_factor); //This value is obtained by using the SparkFun_HX711_Calibration sketch
   scale.set_offset(zero_factor); //Zero out the scale using a previously known zero_factor
 
-  
+  scale.set_scale(calibration_factor2); //This value is obtained by using the SparkFun_HX711_Calibration sketch
+  scale.set_offset(zero_factor2); //Zero out the scale using a previously known zero_factor
+
 }
 
 void loop() {
