@@ -8,9 +8,8 @@ ser = serial.Serial('/dev/tty.usbmodem14201', baudrate=9600, timeout=.1)
 weight = []
 counter = 0
 f = open("Weightfile", "w")
-g = open("Weightfile2", "w")
 time.sleep(3)
-while counter < 10:
+while counter < 100:
     arduinoData = ser.readline()
     string = arduinoData.decode()  # convert the byte string to a unicode string
     num = str(string)  # convert the unicode string to an int
@@ -18,8 +17,6 @@ while counter < 10:
     weight.append(num)
     f.write(str(num))
     f.write(str("\n"))
-    for element in weight:
-        g.write(element + "\n")
     counter += 1
 
 
