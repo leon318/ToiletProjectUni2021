@@ -33,8 +33,8 @@
 
 #define  LOADCELL_DOUT_PIN1  4
 #define  LOADCELL_SCK_PIN1  5
-#define  LOADCELL_DOUT_PIN2  6
-#define  LOADCELL_SCK_PIN12  7
+#define  LOADCELL_DOUT_PIN2 6
+#define  LOADCELL_SCK_PIN12 7
 
 
 HX711 scale;
