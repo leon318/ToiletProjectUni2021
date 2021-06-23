@@ -7,11 +7,16 @@ import pandas as pd
 print(glob.glob('/Users/Leon/Documents/ToiletProjectUni2021/Experiment3(Leon_Standing2)/Experiment3,T-*.csv'))
 filenames = sorted(glob.glob('/Users/Leon/Documents/ToiletProjectUni2021/Experiment3(Leon_Standing2)/Experiment3,T-*.csv'))
 filenames = filenames[0:5]
+
+x_list = list()
+
 for filename in filenames:
   print(filename)
   x,y = np.loadtxt(filename,
                      unpack = True,
                      delimiter= ',')
+  x_list.append(x)
+  print(type(x))
   print(x)
   print(y)
   plt.plot(x,y)
