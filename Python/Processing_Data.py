@@ -1,7 +1,6 @@
 import glob
 import numpy as np
 import matplotlib.pyplot as plt
-import statistics
 
 print(glob.glob('/Users/Leon/Documents/ToiletProjectUni2021/Exp4(Leon_Standing_ADS)/Exp4,T-*.csv'))
 filenames = sorted(glob.glob('/Users/Leon/Documents/ToiletProjectUni2021/Exp4(Leon_Standing_ADS)/Exp4,T-*.csv'))
@@ -22,7 +21,7 @@ g = 0 #index for y lists
 s = 0 #variable to compare to the y_list which has as many values as the number of files
 q = 0
 k = 0
-Total = 0
+Total = 0 #This is to add all the y lists into one array
 for filename in filenames: #This forloop opens up all the files from the experiment and puts the time in the x and the weight in
     # the y. It then adds it to the x list and the y list. In the end, you have multiple arrays with in a list
   print(filename)
@@ -35,27 +34,30 @@ for filename in filenames: #This forloop opens up all the files from the experim
   print(x_list)
 ###################################################
 while s < len(y_list): #This removes all the indexes with y values less than .1. It then adds them into a list. it does this for
-    #every y file
-    res = [idx for idx, val in enumerate(y_list[s]) if val > .1]
+    #every y file. In the end, you have all the indexes for each y_list[] in an array in a list
+    res = [idx for idx, val in enumerate(y_list[s]) if val > .05]
    # print(str(res))
     res_list.append(res)
     s+=1
+print(res_list)
 ####################################################
 
-print(res_list)
-for res in res_list:
+# print(res_list)
+for res in res_list: #This uses iteration of q. This checks every single array in the larger list and finds the minimum value in each array.
+    #It then publishes that minimum value to a list and increases the counter so it goes through all the arrays. It then finds the greate of those values
    f = min(res_list[q])
    final_0_list.append(f)
    q+=1
 print(final_0_list)
-print(min(final_0_list))
-lowest_index = min(final_0_list)
+print(max(final_0_list)) #I changed the following two to max since the maximum is where they are all above the certain defined value.
+highest_index = max(final_0_list) #This finds the most common index where the number is larger than .1. This is the largest one of the smallest ones
 ###################################################
 
-for i, x in enumerate(x_list):
-     x_list[i] = x[lowest_index:]
+for i, x in enumerate(x_list): #This deletes all the numbers before the certain lowest index to get rid of all the 0.0 values in
+   # the y and all the time values in the x.
+     x_list[i] = x[highest_index:]
 for h, y in enumerate(y_list):
-     y_list[h] = y[lowest_index:]
+     y_list[h] = y[highest_index:]
 print("hello")
 print(x_list[0])
 print(y_list[0])
@@ -109,18 +111,20 @@ print(y_list[0])
 for idx, y in enumerate(y_list):
     Total = y_list[idx]+Total
 
-print(Total)
-Average = Total/len(y_list)
+print(Total) #This is the one giant matrix with all the corresponging values added to eachother
+Average = Total/len(y_list) #This is the average that will be graphed later.
 print(Average)
-#################################
+################################# This organizes the y data into an array to which the STD can be added too.
 Array = np.column_stack((y_list[0:7]))
-verticalArray= np.vstack(Array)
-print(Array)
-
+#verticalArray= np.vstack(Array)
+#print(Array)
+#################### This is a successful STD calculation. The STDs are added to the corresponging values.
 STD = np.std(Array, axis = 1)
 print(STD)
+Above_STD = Average + STD
+Below_STD = Average - STD
 
-#################################
+################################# This is a failed STD
 # STD = np.std(Total, axis = 1)
 # print(STD)
 ###############################################
@@ -133,40 +137,44 @@ print(STD)
 # print("yup")
 # print(result)
 #############################################
-# x_axis = x_list[0] - (x_list[0][0]) #This shifts the data back to 0. We subtract the minimum value from the x_list[0] from the
-# # x_list[0] so the first value shifts to 0.
-# print(x_axis)
-# plt.plot(x_axis,Average) #This plots the x values and the y values. Since all the x values are the same after the processing, it doesn't matter which one we use.
-# plt.title("Weight (kg) vs Time (ms) ")
-# plt.xlabel("Time (ms)")
-# plt.ylabel("Weight (kg)")
-# plt.show()
-
-
-
-
-###########################
-#  print(y_list)
-# print("This is length Y")
-# print(len(y_list[0]))
-# print(len(y_list[1]))
-# print(x_list)
-# print("This is length X")
-# print(len(x_list[0]))
-# print(len(x_list[1]))
-
-# print(x_list)
-# print(y_list)
-# print(len(x_list))
-# print(len(x_list[0]))
-# print(len(x_list[1]))
-# length_list.append(len(x_list[0]))
-# length_list.append(len(x_list[1]))
-# print(length_list)
-# d = min(length_list)
-# print(d)
+x_axis = x_list[0] - (x_list[0][0]) #This shifts the data back to 0. We subtract the minimum value from the x_list[0] from the
+# x_list[0] so the first value shifts to 0.
+print(x_axis)
+plt.plot(x_axis,Average, color = 'orange')#This plots the x values and the y values. Since all the x values are the same after the processing, it doesn't matter which one we use.
+plt.plot(x_axis, Above_STD, color = 'orange', alpha=0.25) #Below plots the standard deviation in orange
+plt.plot(x_axis, Below_STD, color = 'orange', alpha=0.25)
+plt.fill_between(x_axis, Average, Below_STD, color='orange', alpha=0.25)
+plt.fill_between(x_axis, Average, Above_STD, color='orange', alpha=0.25)
+plt.title("Weight (kg) vs Time (ms) ")
+plt.xlabel("Time (ms)")
+plt.ylabel("Weight (kg)")
+plt.show()
+#########################################
 #
-# while len(x_list[0]) > len(x_list[1]):
-#    x_list[0].pop[-1]
-#     print(len(x_list[0]))
-#   y_list.append(y)
+#
+#
+# ###########################
+# #  print(y_list)
+# # print("This is length Y")
+# # print(len(y_list[0]))
+# # print(len(y_list[1]))
+# # print(x_list)
+# # print("This is length X")
+# # print(len(x_list[0]))
+# # print(len(x_list[1]))
+#
+# # print(x_list)
+# # print(y_list)
+# # print(len(x_list))
+# # print(len(x_list[0]))
+# # print(len(x_list[1]))
+# # length_list.append(len(x_list[0]))
+# # length_list.append(len(x_list[1]))
+# # print(length_list)
+# # d = min(length_list)
+# # print(d)
+# #
+# # while len(x_list[0]) > len(x_list[1]):
+# #    x_list[0].pop[-1]
+# #     print(len(x_list[0]))
+# #   y_list.append(y)
