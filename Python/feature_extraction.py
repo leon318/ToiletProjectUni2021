@@ -1,3 +1,7 @@
+
+'''
+Generates csv file
+'''
 import glob
 import numpy as np
 
