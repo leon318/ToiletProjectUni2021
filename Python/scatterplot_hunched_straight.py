@@ -20,31 +20,42 @@ df = df.replace({"Position_Encoding": mapping})
 print(df)
 x = 1
 
-    # if df.Person == 'aron':
-df.Person.astype('category').cat.codes
 
-plt.scatter(x=df.Position[0:19],
-            y=df.Toilet_Weight,
-            s=5,
-            c = df.Person.astype('category').cat.codes,
-            marker='v')
+color_dict = { 'anjany' : 'purple',
+               'aron' : 'red',
+               'kyriakos' : 'green',
+               'leon' : 'orange',
+               'matteo' : 'blue'}
 
-plt.scatter(x=df.Position,
-            y=df.Floor_Weight,
-            s=5,
-            c = df.Person.astype('category').cat.codes,
-            marker='s')
+names = ('anjany', 'aron', 'kyriakos', 'leon', 'matteo')
+for i, name in enumerate(names):
+    a = df[(df['Person'] == names[i])]
+    plt.scatter(x=a.Position,
+                y=a.Toilet_Weight/(a.Total_Weight),
+                s=5,
+                c= color_dict[name],
+                marker='v',
+                label = f"{names[i]}, Toilet Weight")
 
-plt.scatter(x=df.Position,
-            y=df.Total_Weight,
-            s=5,
-            c = df.Person.astype('category').cat.codes,
-            marker='o')
+    plt.scatter(x=a.Position,
+                y=a.Floor_Weight/(a.Total_Weight),
+                s=5,
+                c= color_dict[name],
+                marker='s',
+                label = f"{names[i]}, Floor Weight")
+
+    # plt.scatter(x=a.Position,
+    #             y=a.Total_Weight/(a.Total_Weight),
+    #             s=5,
+    #             c= color_dict[name],
+    #             marker='o',
+    #             label = f"{names[i]}, Total Weight")
+
+plt.title("Normalized Weight Hunched vs Straight Scatterplot")
 plt.xlabel("Position")
-plt.ylabel("Weight (kg)")
-# if df['Person'].str.contains('aron').any():
-#     print ("aron is there")
-plt.legend(["Toilet_Weight", "Floor_Weight", "Total_Weight"], loc ="best")
-# plt.legend([df.Person], loc = 'best')
-# Create the figure
+plt.ylabel("Weight (normalized)")
+# # if df['Person'].str.contains('aron').any():
+# #     print ("aron is there")
+# plt.legend(["Toilet_Weight", "Floor_Weight", "Total_Weight"], loc ="best")
+plt.legend(loc = "lower center")
 plt.show()
