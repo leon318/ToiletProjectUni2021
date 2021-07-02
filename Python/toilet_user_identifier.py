@@ -20,17 +20,9 @@ filename = "*.csv"
 number_of_files = 10
 weight_threshold = .05
 # -------------------- program ------------------------
-# print(glob.glob('/Users/Leon/Documents/ToiletProjectUni2021/Exp4(Leon_Standing_ADS)/Exp4,T-*.csv'))
 names = ('anjany', 'aron', 'kyriakos', 'leon', 'matteo')
 color_list = ('purple','red','green','orange','blue')
-# files = (sorted(glob.glob("/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction//*/*.csv")))
-# filenames = sorted(glob.glob(os.path.join(project_dir1, project_dir2[0], filename)))
-# print(filenames[0])
 
-max_value_storage =list()
-max_value_location_storage = list()
-stabilize_value_storage = list()
-stabilize_location_storage = list()
 random_array1 = np.array([])
 random_array2 = np.array([])
 feature_array_storage = list()
@@ -97,6 +89,7 @@ def hunch_vs_straight(filenames):
             position_array_storage.append([0, 1])
         elif 'hunch' in h:
             position_array_storage.append([1,0])
+
     return position_array_storage
 files = (sorted(glob.glob("/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction//*/*.csv")))
 for i, file in enumerate(project_dir_list2):
@@ -114,9 +107,13 @@ for i, file in enumerate(project_dir_list2):
     modifiedz_length_list = list()
     totaly = 0  # This is to add all the y lists into one array
     totalz = 0
+    max_value_storage = list()
+    max_value_location_storage = list()
+    stabilize_value_storage = list()
+    stabilize_location_storage = list()
     # files = (sorted(glob.glob("/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction//*/*.csv")))
     filenames = sorted(glob.glob(os.path.join(project_dir_list2[i], filename)))
-    filenames = filenames[0:number_of_files]
+    # filenames = filenames[0:number_of_files]
     # print(filenames)
     x_list, y_list, z_list = unpack_and_append_data3(filenames, x_list, y_list, z_list)
     resy, resz = threshold_finder(y_list, z_list)
@@ -135,32 +132,31 @@ for i, file in enumerate(project_dir_list2):
     stabilize_value_storage, stabilize_location_storage = stabilize_location(z_list, random_array1, random_array2)
     # print(stabilize_value_storage)
     # print(stabilize_location_storage)
-    for idx, g in enumerate(filenames): #max_value_storage[0]
-        random_array1 = np.concatenate((max_value_storage[0][idx], max_value_storage[1][idx], max_value_storage[2][idx], max_value_location_storage[0][idx], max_value_location_storage[1][idx],
+    for idx, g in enumerate(filenames): #max_value_storage[0] 0 has 10 so its not reset every time
+        # print(len(max_value_storage))
+        array = np.concatenate((max_value_storage[0][idx], max_value_storage[1][idx], max_value_storage[2][idx], max_value_location_storage[0][idx], max_value_location_storage[1][idx],
                                    max_value_location_storage[2][idx], stabilize_value_storage[0][idx],
                                   stabilize_value_storage[1][idx], stabilize_value_storage[2][idx], stabilize_location_storage[0][idx], stabilize_location_storage[1][idx],
                                    stabilize_location_storage[2][idx]), axis=None)
-        feature_array_storage.append(random_array1)
-    # print(feature_array_storage)
+        # print(array)
+        # print(type(array))
+        feature_array_storage.append(array)
+
 
 
     position_array_storage = hunch_vs_straight(filenames)
-    # print(position_array_storage)
+    #
 
 for i, array in enumerate(feature_array_storage):
     tupple = (feature_array_storage[i],position_array_storage[i])
     final_list.append(tupple)
-print(len(feature_array_storage))
-print(len(position_array_storage))
+# print(feature_array_storage)
+# print(position_array_storage)
+# print(len(feature_array_storage))
+# print(len(position_array_storage))
+
 print(final_list)
-
-
-
-
-
-
-
-
+print(len(final_list))
 
 
 
