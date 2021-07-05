@@ -1,9 +1,9 @@
-def user_identifier():
+def tuple_list_generator():
     import glob
     import numpy as np
     import matplotlib.pyplot as plt
     import os
-    from Python.data_generator_function.user_input_function import user_input_and_directory_generator
+    from Python.data_analysis_functions.user_input_function import user_input_and_directory_generator
     from Python.processing_functions.unpacking_data import unpack_and_append_data3
     from Python.processing_functions.theshold_locator_and_trimmers import threshold_locater_and_posterior_trimmer3
     from Python.processing_functions.find_shortest_length import find_shortest_length
@@ -106,8 +106,7 @@ def user_identifier():
         position_array_storage = hunch_vs_straight(filenames)
         return feature_array_storage, position_array_storage
 
-    final_directories = user_input_and_directory_generator(potential_directories)
-
+    final_directories, input_integer = user_input_and_directory_generator(potential_directories)
     for i, file in enumerate(final_directories):
         max_value_storage = list()
         max_value_location_storage = list()
@@ -166,4 +165,4 @@ def user_identifier():
     # print(final_list)
     # print(len(final_list))
 
-    return final_list
+    return final_list, input_integer

@@ -7,7 +7,7 @@ def user_input_and_directory_generator(potential_directories):
 
     while True:
         input_string = input(
-            "Enter the names of the people you want to analyze separated by spaces. The possible names are: anjnay, aron, kyriakos, leon, matteo. Please "
+            "Enter the names of the people you want to analyze separated by spaces. The possible names are: anjany, aron, kyriakos, leon, matteo. Please "
             "write in all lowercase. The code will not work if the names arent typed correctly. Don't enter the same names again if you have already done so \n")
         long_list = input_string.split()
         #     short_list = []
@@ -35,4 +35,6 @@ def user_input_and_directory_generator(potential_directories):
         for i, s2 in enumerate(potential_directories):
             if s1 in s2:
                 final_directories.append(potential_directories[i])
-    return final_directories
+    input_integer = int(input("Enter the percentage of the data that you want to be to train the machine learning code. \n"))
+    print(type(input_integer))
+    return final_directories, input_integer
