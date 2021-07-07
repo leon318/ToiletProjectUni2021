@@ -1,8 +1,15 @@
 def tuple_list_generator():
     import glob
     import numpy as np
+    from numpy import argmax
+    from numpy import array
+    import os
+    from tensorflow import keras
+    from keras.utils import to_categorical
     import matplotlib.pyplot as plt
     import os
+    from sklearn.preprocessing import OneHotEncoder
+    import numpy as np
     from Python.data_analysis_functions.user_input_function import user_input_and_directory_generator
     from Python.processing_functions.unpacking_data import unpack_and_append_data3
     from Python.processing_functions.theshold_locator_and_trimmers import threshold_locater_and_posterior_trimmer3
@@ -20,6 +27,10 @@ def tuple_list_generator():
                              f"{pathway}aron(hunched)", f"{pathway}kyriakos(hunched)", f"{pathway}leon(hunched)",
                              f"{pathway}matteo(hunched)")
 
+    potential_directories_array = np.array(["anjany(straight)", "aron(straight)", f"kyriakos(straight)",
+         "leon(straight)", "matteo(straight)", "anjany(hunched)",
+         "aron(hunched)", "kyriakos(hunched)", "leon(hunched)",
+         "matteo(hunched)"]).reshape(-1, 1)
     filename = "*.csv"
     weight_threshold = .05
     # -------------------- program ------------------------
@@ -30,6 +41,8 @@ def tuple_list_generator():
     random_array2 = np.array([])
     feature_array_storage = list()
     position_array_storage = list()
+    name_numbers = list()
+    encodings = list()
     final_list = list()
 
     def threshold_finder(y_list, z_list):
@@ -56,9 +69,10 @@ def tuple_list_generator():
     def max_value_list_storage(total_list, random_array1, random_array2):
         for i, y in enumerate(total_list):
             max_floor = np.amax(total_list[i])
-            max_floor_loc = np.argmax(total_list[i] * 100)
+            index = (total_list[i])
+            max_floor_loc = np.argmax(index)
             random_array1 = np.append(random_array1, [max_floor])
-            random_array2 = np.append(random_array2, [max_floor_loc])
+            random_array2 = np.append(random_array2, [max_floor_loc * 100])
         np.vstack(random_array1)
         np.vstack(random_array2)
         max_value_storage.append(random_array1)
@@ -72,10 +86,10 @@ def tuple_list_generator():
             for idx, element in reversed(list(enumerate(total_list[i]))):
                 stabilizer = abs(total_list[i][idx] - total_list[i][idx - 1])
                 # print(i, idx, stabilizer)
-                if stabilizer > .05:
+                if stabilizer > .9:
                     # print(i, idx+1, element)
                     random_array1 = np.append(random_array1, [element])
-                    random_array2 = np.append(random_array2, [idx * 100])
+                    random_array2 = np.append(random_array2, [idx*100])
                     break
         np.vstack(random_array1)
         np.vstack(random_array2)
@@ -93,6 +107,32 @@ def tuple_list_generator():
                 position_array_storage.append(arr)
 
         return position_array_storage
+
+    def name_encoder(filenames):
+        name_list = ['anjany', 'aron', 'kyriakos', 'leon', 'matteo']
+        names_dict = {'anjany': 1,
+                 'aron': 2,
+                 'kyriakos': 3,
+                 'leon': 4,
+                 'matteo': 5}
+
+        name_numbers
+        for h in (filenames):
+            for i, name in enumerate(name_list):
+                if name in h:
+                    name_numbers.append(names_dict[name_list[i]])
+        return name_numbers
+    def name_and_position_encoder(potential_directories, potential_directories_array, filenames):
+        encoder = OneHotEncoder(handle_unknown='ignore')
+        encoder.fit(potential_directories_array)
+        encoder.categories_
+        for h in (filenames):
+            for i, name in enumerate(potential_directories):
+                if name in h:
+                    name_encoded = encoder.transform([potential_directories_array[i]]).toarray()
+                    encodings.append(name_encoded)
+
+        return encodings
 
     def storage_generators(max_value_storage, max_value_location_storage, stabilize_value_storage,
                            stabilize_location_storage, feature_array_storage):
@@ -133,13 +173,15 @@ def tuple_list_generator():
         # filenames = filenames[0:number_of_files]
         # print(filenames)
         x_list, y_list, z_list = unpack_and_append_data3(filenames, x_list, y_list, z_list)
-        resy, resz = threshold_finder(y_list, z_list)
+        # print(y_list)
+    #     resy, resz = threshold_finder(y_list, z_list)
         x_list, y_list, z_list = threshold_locater_and_posterior_trimmer3(x_list, y_list, z_list, weight_threshold)
         d = find_shortest_length(filenames, original_length_list, x_list)
         x_axis, x_list, y_list, z_list, modifiedx_length_list, modifiedy_length_list, modifiedz_length_list = anterior_trimmer_x_and_y_and_z(
             d, x_list, y_list, z_list, modifiedx_length_list, modifiedy_length_list, modifiedz_length_list)
         total_list = total_weight_calculator(y_list, z_list, total_list)
-        total_list, y_list, z_list = normalizer(total_list, y_list, z_list)
+        # print(y_list)
+        # total_list, y_list, z_list = normalizer(total_list, y_list, z_list)
         max_value_storage, max_value_location_storage = max_value_list_storage(total_list, random_array1, random_array2)
         max_value_storage, max_value_location_storage = max_value_list_storage(y_list, random_array1, random_array2)
         max_value_storage, max_value_location_storage = max_value_list_storage(z_list, random_array1, random_array2)
@@ -156,7 +198,10 @@ def tuple_list_generator():
                                                                            stabilize_value_storage,
                                                                            stabilize_location_storage,
                                                                            feature_array_storage)
-
+        name_numbers = name_encoder(filenames)
+        encodings = name_and_position_encoder(potential_directories, potential_directories_array, filenames)
+        # print(encodings)
+        position_and_person = np.vstack(encodings)
     for i, array in enumerate(feature_array_storage):
         tupple = (feature_array_storage[i], position_array_storage[i])
         final_list.append(tupple)
@@ -165,4 +210,9 @@ def tuple_list_generator():
     # print(final_list)
     # print(len(final_list))
 
-    return final_list, input_integer
+    name_numbers = np.array(name_numbers)
+    # one hot encode
+    encoded = to_categorical(name_numbers)
+    encoded = np.delete(encoded, 0, axis=1)
+
+    return final_list, input_integer, encoded, position_and_person
