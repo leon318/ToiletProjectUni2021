@@ -53,25 +53,25 @@ def anterior_trimmer_x_and_y(d, x_list, y_list, modifiedx_length_list, modifiedy
 import numpy as np
 def threshold_locater_and_posterior_trimmer3(x_list, y_list,z_list, weight_threshold,):
     """
-    Free text descrpition:
-    This function locates where the weight value starts to be greater than one and then indexes it from there, making that the
-    first value. It thertefore cuts out all the zeros at the beginning of each test.
-    Args:
-        x_list (list): this list needs to be imported so the same amount of points can be cut out in its arrays as in their corresponding y arrays
-        y_list (list): This list needs to be imported so all the 0.0 can be cut out.
-        weight_threshold (variable): This is used as the cutofff point. The np.argmax uses this value to cut out all the indexes before
-        it.
+       Free text descrpition:
+       This function locates where the weight value starts to be greater than one and then indexes it from there, making that the
+       first value. It thertefore cuts out all the zeros at the beginning of each test.
+       Args:
+           x_list (list): this list needs to be imported so the same amount of points can be cut out in its arrays as in their corresponding y arrays
+           y_list (list): This list needs to be imported so all the 0.0 can be cut out.
+           weight_threshold (variable): This is used as the cutofff point. The np.argmax uses this value to cut out all the indexes before
+           it.
 
-    Return: This returns the modified x_list and the y_list without the zeros and the corresponding x values.
+       Return: This returns the modified x_list and the y_list without the zeros and the corresponding x values.
 
-    """
+       """
     for i, y in enumerate(y_list):
         res = np.argmax(y >= weight_threshold)
         y_list[i] = y[res:]
         x_list[i] = x_list[i][res:]
         z_list[i] = z_list[i][res:]
-    return x_list, y_list, z_list
 
+    return x_list, y_list, z_list
 def anterior_trimmer_x_and_y_and_z(d, x_list, y_list, z_list, modifiedx_length_list, modifiedy_length_list, modifiedz_length_list):
     """
        Free text description:

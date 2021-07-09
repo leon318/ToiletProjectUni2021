@@ -38,18 +38,18 @@ def matplotlib_plotter_with_z_no_std(x_axis, averagey, averagez, color= 'orange'
         label: this will be the key.
     """
     total_weight = averagez +  averagey
-    plt.plot(x_axis, averagey/total_weight[-1], color = color, label = ','.join(['floor_weight', filler]))
+    plt.plot(x_axis, averagey/total_weight[-1], color = color, label = ','.join(['floor_weight', filler]), linestyle = ':')
     # plt.plot(x_axis, above_stdy, color=color, alpha=alpha)
     # plt.plot(x_axis, below_stdy, color=color, alpha=alpha)
     # plt.fill_between(x_axis, averagey, below_stdy, color=color, alpha=alpha)
     # plt.fill_between(x_axis, averagey, above_stdy, color=color, alpha=alpha)
 
 
-    plt.plot(x_axis, averagez/total_weight[-1], color = color, label = ','.join(['toilet_weight', filler]))
+    plt.plot(x_axis, averagez/total_weight[-1], color = color, label = ','.join(['toilet_weight', filler]), linestyle = "--")
      # This plots the x values and the y values. Since all the x values are the same after the processing, it doesn't matter which one we use.
     # plt.plot(x_axis, above_stdz, color=color, alpha=0.25)  # Below plots the standard deviation in orange
     # plt.plot(x_axis, below_stdz, color=color, alpha=0.25)
     # plt.fill_between(x_axis, averagez, below_stdz, color=color, alpha=0.25)
     # plt.fill_between(x_axis, averagez, above_stdz, color=color, alpha=0.25)
 
-    plt.plot(x_axis, (averagey + averagez)/total_weight[-1], color = color, label = ','.join(['total weight', filler]))
+    plt.plot(x_axis, (averagey + averagez)/total_weight[-1], color = color, label = ','.join(['total weight', filler]), linestyle = '-')
