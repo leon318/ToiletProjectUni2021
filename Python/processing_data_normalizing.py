@@ -1,6 +1,7 @@
 import glob
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import os
 
 from processing_functions.unpacking_data import unpack_and_append_data3
@@ -23,6 +24,7 @@ weight_threshold = .05
 
 names = ('anjany', 'aron', 'kyriakos', 'leon', 'matteo')
 color_list = ('purple','red','green','orange','blue')
+linestyle = ['solid', 'dashed', 'dotted']
 # files = (sorted(glob.glob("/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction//*/*.csv")))
 # filenames = sorted(glob.glob(os.path.join(project_dir1, project_dir2[0], filename)))
 # print(filenames[0])
@@ -50,11 +52,12 @@ for i, q in enumerate(project_dir_list2):
     totaly, totalz, averagey, averagez = total_and_averager_y_and_z(y_list, z_list, totaly, totalz)
     stdy, stdz, above_stdy, below_stdy, above_stdz, below_stdz = std_calculator_y_and_z(averagey, averagez, y_list, z_list)
     matplotlib_plotter_with_z_no_std(x_axis, averagey, averagez, color = color_list[i], filler = label_list[i])
+    plt.legend(loc="best")
+    plt.title("Weight vs Time (ms) Normalized (Hunched)")
+    plt.xlabel("Time (ms)")
+    plt.ylabel("Weight")
+plt.show()
 # #
 #
-plt.legend(loc="best")
-plt.title("Weight vs Time (ms) Normalized")
-plt.xlabel("Time (ms)")
-plt.ylabel("Weight")
-plt.show()
+
 
