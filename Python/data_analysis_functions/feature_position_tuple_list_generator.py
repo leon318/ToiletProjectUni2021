@@ -116,7 +116,7 @@ def tuple_list_generator():
                  'leon': 4,
                  'matteo': 5}
 
-        name_numbers
+        # name_numbers
         for h in (filenames):
             for i, name in enumerate(name_list):
                 if name in h:
