@@ -1,3 +1,8 @@
+'''
+This was copied into a function. This program is no longer in use. See the tuple generator function to see this code
+it is updated and has more functionality. It is similar to feature_extraction_trial2.py.
+'''
+
 import glob
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,9 +17,27 @@ from processing_functions.math import std_calculator_y_and_z
 from processing_functions.Plotter import matplotlib_plotter_with_z_no_std
 #Functions
 # -------------------- user input ------------------------
-project_dir_1 = "/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction"
-project_dir_list2 = ("/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/anjany(straight)","/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/aron(straight)","/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/kyriakos(straight)","/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/leon(straight)","/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/matteo(straight)",
-                     "/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/anjany(hunched)","/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/aron(hunched)","/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/kyriakos(hunched)","/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/leon(hunched)","/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/matteo(hunched)")
+
+pathway = '/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/'
+potential_directories = (f"{pathway}anjany(straight)", f"{pathway}aron(straight)", f"{pathway}kyriakos(straight)",
+                         f"{pathway}leon(straight)", f"{pathway}matteo(straight)", f"{pathway}anjany(hunched)",
+                         f"{pathway}aron(hunched)", f"{pathway}kyriakos(hunched)", f"{pathway}leon(hunched)",
+                         f"{pathway}matteo(hunched)")
+def user_input_people(potential_directories):
+    input_string = str(input('Enter the names of the people you want to analyze separated by spaces \n'))
+    print("\n")
+    user_list = input_string.split()
+    final_directories = list()
+    # print list
+    print('list: ', user_list)
+    for s1 in input_string.split():
+        for i, s2 in enumerate(potential_directories):
+            if s1 in s2:
+                final_directories.append(potential_directories[i])
+    return final_directories
+
+final_directories = user_input_people(potential_directories)
+
 label_list = ('anjany', 'aron', 'kyriakos', 'leon', 'matteo')
 filename = "*.csv"
 number_of_files = 10
@@ -47,11 +70,7 @@ def normalizer(total_list, y_list,z_list):
         z_list[i] = z_list[i]/total_list[i][-1]
         total_list[i] = total_list[i]/total_list[i][-1]
     return total_list, y_list, z_list
-# def max_values(y_list):
-#     max_floor = np.amax(y_list[i])
-#     max_floor_loc = np.argmax(y_list[i])
-#     # print(max_floor, max_floor_loc)
-#     return max_floor, max_floor_loc
+
 def max_value_list_storage(total_list, random_array1, random_array2):
     for i, y in enumerate(total_list):
         max_floor = np.amax(total_list[i])
@@ -83,16 +102,34 @@ def stabilize_location(total_list, random_array1, random_array2):
 
 
 def hunch_vs_straight(filenames):
-    # print(filenames)
     for h in filenames:
         if 'straight' in h:
-            position_array_storage.append([0, 1])
+            arr = np.array([0, 1])
+            position_array_storage.append(arr)
         elif 'hunch' in h:
-            position_array_storage.append([1,0])
+            arr = np.array([1,0])
+            position_array_storage.append(arr)
 
     return position_array_storage
-files = (sorted(glob.glob("/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction//*/*.csv")))
-for i, file in enumerate(project_dir_list2):
+
+def storage_generators(max_value_storage,max_value_location_storage, stabilize_value_storage, stabilize_location_storage, feature_array_storage ):
+    resulting_list = max_value_storage+max_value_location_storage+stabilize_value_storage+stabilize_location_storage
+    com = np.vstack(resulting_list).T
+    # print(com)
+    num_rows, num_cols = com.shape
+    feature_array_list = (np.split(com,num_rows))
+    for ind, g in enumerate(feature_array_list):
+         feature_array_storage.append(feature_array_list[ind][0])
+    position_array_storage = hunch_vs_straight(filenames)
+    return feature_array_storage, position_array_storage
+
+for i, file in enumerate(final_directories):
+    max_value_storage = list()
+    max_value_location_storage = list()
+    stabilize_value_storage = list()
+    stabilize_location_storage = list()
+    files = (sorted(glob.glob("/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction//*/*.csv")))
+    # for i, file in enumerate(project_dir_list2):
     x_list = list()  # This is where all the x arrays of data are uploaded
     y_list = list()  # This is where all the y arrays of data are uploaded
     z_list = list()
@@ -107,15 +144,12 @@ for i, file in enumerate(project_dir_list2):
     modifiedz_length_list = list()
     totaly = 0  # This is to add all the y lists into one array
     totalz = 0
-    max_value_storage = list()
-    max_value_location_storage = list()
-    stabilize_value_storage = list()
-    stabilize_location_storage = list()
     # files = (sorted(glob.glob("/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction//*/*.csv")))
-    filenames = sorted(glob.glob(os.path.join(project_dir_list2[i], filename)))
+    filenames = sorted(glob.glob(os.path.join(final_directories[i], filename)))
     # filenames = filenames[0:number_of_files]
     # print(filenames)
     x_list, y_list, z_list = unpack_and_append_data3(filenames, x_list, y_list, z_list)
+    print(y_list)
     resy, resz = threshold_finder(y_list, z_list)
     x_list, y_list, z_list = threshold_locater_and_posterior_trimmer3(x_list, y_list, z_list, weight_threshold)
     d = find_shortest_length(filenames, original_length_list, x_list)
@@ -125,67 +159,20 @@ for i, file in enumerate(project_dir_list2):
     max_value_storage, max_value_location_storage = max_value_list_storage(total_list, random_array1, random_array2)
     max_value_storage, max_value_location_storage = max_value_list_storage(y_list, random_array1, random_array2)
     max_value_storage, max_value_location_storage = max_value_list_storage(z_list, random_array1, random_array2)
-    # print(max_value_storage)
-    # print(max_value_location_storage)
+    # print(len(max_value_storage))
+    # print(len(max_value_location_storage))
     stabilize_value_storage, stabilize_location_storage = stabilize_location(total_list, random_array1, random_array2)
     stabilize_value_storage, stabilize_location_storage = stabilize_location(y_list, random_array1, random_array2)
     stabilize_value_storage, stabilize_location_storage = stabilize_location(z_list, random_array1, random_array2)
-    # print(stabilize_value_storage)
-    # print(stabilize_location_storage)
-    for idx, g in enumerate(filenames): #max_value_storage[0] 0 has 10 so its not reset every time
-        # print(len(max_value_storage))
-        array = np.concatenate((max_value_storage[0][idx], max_value_storage[1][idx], max_value_storage[2][idx], max_value_location_storage[0][idx], max_value_location_storage[1][idx],
-                                   max_value_location_storage[2][idx], stabilize_value_storage[0][idx],
-                                  stabilize_value_storage[1][idx], stabilize_value_storage[2][idx], stabilize_location_storage[0][idx], stabilize_location_storage[1][idx],
-                                   stabilize_location_storage[2][idx]), axis=None)
-        # print(array)
-        # print(type(array))
-        feature_array_storage.append(array)
-
-
-
-    position_array_storage = hunch_vs_straight(filenames)
-    #
+    # print(len(stabilize_value_storage))
+    # print(len(stabilize_location_storage))
+    feature_array_storage, position_array_storage = storage_generators(max_value_storage, max_value_location_storage, stabilize_value_storage,
+                       stabilize_location_storage, feature_array_storage)
 
 for i, array in enumerate(feature_array_storage):
     tupple = (feature_array_storage[i],position_array_storage[i])
     final_list.append(tupple)
-# print(feature_array_storage)
-# print(position_array_storage)
 # print(len(feature_array_storage))
 # print(len(position_array_storage))
-
 print(final_list)
-print(len(final_list))
-
-
-
-
-
-
-# plt.plot(x_axis, y_list[6], color = 'blue', label = 'floor_scale')
-# plt.plot(x_axis, z_list[6], color = 'orange', label = 'toilet_weight')
-# #This plots the x values and the y values. Since all the x values are the same after the processing, it doesn't matter which one we use.
-# plt.plot(x_axis, total_list[6], color = 'red', label = 'total_weight')
-#
-# plt.title("Weight (kg) vs Time (ms) (Hunched Posture Aron)")
-# plt.xlabel("Time (ms)")
-# plt.ylabel("Weight (kg)")
-# plt.legend(loc="best")
-#
-# plt.show()
-# #
-
-
-#
-# totaly, totalz, averagey, averagez = total_and_averager_y_and_z(y_list, z_list, totaly, totalz)
-#
-# #
-# def destabilizer_finder(y_list, z_list):
-#     for i, y in reversed(y_list):
-#         abs(current_value - last_value) > threshold
-#     for i, z in enumerate(z_list):
-#         resz = np.argmax(z >= weight_threshold)
-#         print(resy, resz)
-#     return resy, resz
-#
+# print(len(final_list))
