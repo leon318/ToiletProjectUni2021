@@ -4,8 +4,9 @@ def tuple_list_generator():
     from numpy import argmax
     from numpy import array
     import os
+    from tensorflow.keras.utils import to_categorical
     from tensorflow import keras
-    from keras.utils import to_categorical
+    import keras
     import matplotlib.pyplot as plt
     import os
     from sklearn.preprocessing import OneHotEncoder
@@ -22,20 +23,19 @@ def tuple_list_generator():
     # -------------------- user input ------------------------
     a =1
     pathway = '/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/'
-    potential_directories = (f"{pathway}anjany(straight)", f"{pathway}aron(straight)", f"{pathway}kyriakos(straight)",
-                             f"{pathway}leon(straight)", f"{pathway}matteo(straight)", f"{pathway}anjany(hunched)",
-                             f"{pathway}aron(hunched)", f"{pathway}kyriakos(hunched)", f"{pathway}leon(hunched)",
-                             f"{pathway}matteo(hunched)")
+    potential_directories = (f"{pathway}anjany(straight)", f"{pathway}aron(straight)", f"{pathway}chinmay(straight)", f"{pathway}esther(straight)", f"{pathway}fahrad(straight)", f"{pathway}ivna(straight)", f"{pathway}kyriakos(straight)",
+                             f"{pathway}laura(straight)", f"{pathway}leon(straight)", f"{pathway}matteo(straight)", f"{pathway}matthias(straight)" , f"{pathway}professor(straight)", f"{pathway}todor(straight)", f"{pathway}zsolt(straight)",
+                             f"{pathway}anjany(hunched)", f"{pathway}aron(hunched)", f"{pathway}chinmay(hunched)", f"{pathway}esther(hunched)", f"{pathway}fahrad(hunched)", f"{pathway}ivna(hunched)", f"{pathway}kyriakos(hunched)",
+                             f"{pathway}laura(hunched)", f"{pathway}leon(hunched)", f"{pathway}matteo(hunched)", f"{pathway}matthias(hunched)", f"{pathway}professor(hunched)", f"{pathway}todor(hunched)", f"{pathway}zsolt(hunched)")
 
-    potential_directories_array = np.array(["anjany(straight)", "aron(straight)", f"kyriakos(straight)",
-         "leon(straight)", "matteo(straight)", "anjany(hunched)",
-         "aron(hunched)", "kyriakos(hunched)", "leon(hunched)",
-         "matteo(hunched)"]).reshape(-1, 1)
+    potential_directories_array = np.array(["anjany(straight)", "aron(straight)", "chinmay(straight)","esther(straight)", "fahrad(straight)", "ivna(straight)", "kyriakos(straight)",
+         "laura(straight)", "leon(straight)", "matteo(straight)", "matthias(straight)", "professor(straight)", "todor(straight)", "zsolt(straight)", "anjany(hunched)", "aron(hunched)", "chinmay(hunched)","esther(hunched)", "fahrad(hunched)", "ivna(hunched)", "kyriakos(hunched)",
+         "laura(hunched)", "leon(hunched)", "matteo(hunched)", "matthias(hunched)", "professor(hunched)", "todor(hunched)", "zsolt(hunched)"]).reshape(-1, 1)
     filename = "*.csv"
     weight_threshold = .05
     # -------------------- program ------------------------
-    names = ('anjany', 'aron', 'kyriakos', 'leon', 'matteo')
-    color_list = ('purple', 'red', 'green', 'orange', 'blue')
+    names = ('anjany', 'aron', 'fahrad', 'kyriakos', 'leon', 'matteo', 'zsolt')
+    color_list = ('purple', 'red', 'pink' ,'green', 'orange', 'blue', 'black')
 
     random_array1 = np.array([])
     random_array2 = np.array([])
@@ -109,12 +109,21 @@ def tuple_list_generator():
         return position_array_storage
 
     def name_encoder(filenames):
-        name_list = ['anjany', 'aron', 'kyriakos', 'leon', 'matteo']
+        name_list = ['anjany', 'aron', 'chinmay', 'esther', 'fahrad', 'ivna', 'kyriakos', 'laura', 'leon', 'matteo', 'matthias', 'professor', 'todor', 'zsolt']
         names_dict = {'anjany': 1,
                  'aron': 2,
-                 'kyriakos': 3,
-                 'leon': 4,
-                 'matteo': 5}
+                'chinmay':3,
+                'esther': 4,
+                'fahrad' : 5,
+                'ivna': 6,
+                 'kyriakos': 7,
+                'laura': 8,
+                 'leon': 9,
+                 'matteo': 10,
+                'matthias': 11,
+                'professor': 12,
+                'todor': 13,
+                'zsolt': 14}
 
         # name_numbers
         for h in (filenames):
