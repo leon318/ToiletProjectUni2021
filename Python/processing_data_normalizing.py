@@ -1,3 +1,7 @@
+'''
+This program also processes the data and plots all the hunched or all the straight curves on the same axis for all 5 people
+To add more people to the analysis, you need to add their names and pathway to the list. Everything here is normalized.
+'''
 import glob
 import numpy as np
 import matplotlib.pyplot as plt
