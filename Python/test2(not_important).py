@@ -1,3 +1,6 @@
+'''
+Not important at all
+'''
 import matplotlib.pyplot as plt
 def graphWriter():
 
