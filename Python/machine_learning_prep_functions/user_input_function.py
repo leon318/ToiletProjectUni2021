@@ -1,3 +1,7 @@
+'''
+This function allows the user to input the names of everyone they wants to include on the model. It also allows the
+user to input the percentage of data that should go to train the model.
+'''
 def user_input_and_directory_generator(potential_directories):
     short_list = list()
 

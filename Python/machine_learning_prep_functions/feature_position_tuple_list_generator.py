@@ -1,3 +1,11 @@
+'''
+This is the main function that gets the raw data and processes everything and in the end generates a list of tuples. This function needs to be updated with every new data file that is
+acquired. You need to update the potential directories list and the potential directories array. You also need to update the user_input _function
+to tell the users what names they can put in and add the names to the list of acceptable names. In addition, the name encoder function also needs to be updated since the names need to be added to its dictionary and list.
+
+This function also calls on the normalizer function. This can be turned on and off by commenting it out. When the data is normalized, make the stabilizer .05. When it
+isn't, make it around .9.
+'''
 def tuple_list_generator():
     import glob
     import numpy as np
@@ -11,7 +19,7 @@ def tuple_list_generator():
     import os
     from sklearn.preprocessing import OneHotEncoder
     import numpy as np
-    from Python.data_analysis_functions.user_input_function import user_input_and_directory_generator
+    from Python.machine_learning_prep_functions.user_input_function import user_input_and_directory_generator
     from Python.processing_functions.unpacking_data import unpack_and_append_data3
     from Python.processing_functions.theshold_locator_and_trimmers import threshold_locater_and_posterior_trimmer3
     from Python.processing_functions.find_shortest_length import find_shortest_length
@@ -45,13 +53,13 @@ def tuple_list_generator():
     encodings = list()
     final_list = list()
 
-    def threshold_finder(y_list, z_list):
-        for i, y in enumerate(y_list):
-            resy = np.argmax(y >= weight_threshold)
-        for i, z in enumerate(z_list):
-            resz = np.argmax(z >= weight_threshold)
-            # print(resy, resz)
-        return resy, resz
+    # def threshold_finder(y_list, z_list):
+    #     for i, y in enumerate(y_list):
+    #         resy = np.argmax(y >= weight_threshold)
+    #     for i, z in enumerate(z_list):
+    #         resz = np.argmax(z >= weight_threshold)
+    #         # print(resy, resz)
+    #     return resy, resz
 
     def total_weight_calculator(y_list, z_list, total_list):
         for i, y in enumerate(y_list):
@@ -131,6 +139,7 @@ def tuple_list_generator():
                 if name in h:
                     name_numbers.append(names_dict[name_list[i]])
         return name_numbers
+
     def name_and_position_encoder(potential_directories, potential_directories_array, filenames):
         encoder = OneHotEncoder(handle_unknown='ignore')
         encoder.fit(potential_directories_array)

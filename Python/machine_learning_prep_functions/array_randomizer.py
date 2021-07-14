@@ -1,6 +1,8 @@
+'''
+This function randomizes the order of both 2d arrays in order for the model to get a sample of everyone's data
+It also splits it into a training set and a testing set for the model based on a user input.
+'''
 import numpy as np
-
-
 def array_randomizer_and_tupple_generator(feature_matrix, position_matrix, input_integer):
     shuffler = np.random.permutation(len(feature_matrix))
     feature_matrix = feature_matrix[shuffler]

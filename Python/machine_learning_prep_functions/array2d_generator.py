@@ -1,3 +1,6 @@
+'''
+This function generates 2d arrays from the 1d arrays. This is necessary for it to be plugged into the model.
+'''
 import numpy as np
 def array_2d_generator(final_list):
     print(len(final_list))
