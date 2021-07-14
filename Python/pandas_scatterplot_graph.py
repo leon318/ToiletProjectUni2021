@@ -1,3 +1,6 @@
+'''
+type of scatterplot using the data from the csv file from the average_weight_csv_generator program.
+'''
 # import pandas as pd
 # import os
 # import matplotlib as plt
