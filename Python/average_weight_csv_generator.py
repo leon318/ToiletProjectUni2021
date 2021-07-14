@@ -1,6 +1,6 @@
 
 '''
-Generates csv file
+Generates csv file. This CSV file is used to make the bar charts and the dot plots.
 '''
 import glob
 import numpy as np
