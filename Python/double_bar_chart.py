@@ -1,3 +1,7 @@
+'''
+This program makes a bar chart showing the difference between the Toilet and Floor scale weight in each position for each person.
+It imports a CSV file from tbe average_weight_csv_generator program.
+'''
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
