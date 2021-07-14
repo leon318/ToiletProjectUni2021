@@ -1,3 +1,8 @@
+'''
+The second set are the same as the first set of functions but just for an extra list. The first were made for just the floor or the toilet and the second for both
+The first ones could have probably been run twice instead of needing to make new ones.
+for reference, x_list represented the time of the csv file, y_list the floor weight, and z_list the toilet weight.
+'''
 import numpy as np
 def threshold_locater_and_posterior_trimmer(x_list, y_list,weight_threshold,):
     """

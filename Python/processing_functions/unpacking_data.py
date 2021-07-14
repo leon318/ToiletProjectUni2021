@@ -1,3 +1,6 @@
+'''
+The second function is the same as the first, but it unpacks a third value in the csv file, the toilet weight.
+'''
 import numpy as np
 def unpack_and_append_data(filenames, x_list, y_list, skiprow = 1):
     """

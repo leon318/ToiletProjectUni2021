@@ -1,3 +1,6 @@
+'''
+The second function are the same function but just for another list. The first was made for just the floor or the toilet and the second for both.
+'''
 import matplotlib.pyplot as plt
 
 

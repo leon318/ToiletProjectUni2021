@@ -1,3 +1,7 @@
+'''
+The second set are the same functions but just for another list. The first were made for just the floor or the toilet and the second for both
+The first ones could have probably been run twice instead of needing to make new ones.
+'''
 import numpy as np
 
 def total_and_averager(y_list,total):
