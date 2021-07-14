@@ -1,3 +1,10 @@
+'''
+This program was used to plot the results of 4 experiments on the same graph. It is not setup for the hunch and straight experiment
+rather only the experiment where you get on and get off either the toilet scale or the floor scale. It uses functions however which can be reused.
+'''
+
+
+
 import glob
 import numpy as np
 import matplotlib.pyplot as plt
@@ -109,7 +116,7 @@ print(modifiedx_length_list2)
 print(modifiedy_length_list2)
 total2, average = total_and_averager(y_list2, total2)
 std, above_std, below_std = std_calculator(average, y_list2)
-matplotlib_plotter(x_axis2, above_std, below_std, average, color = 'blue', alpha =.25, label="toilethx711")
+matplotlib_plotter(x_axis2, above_std, below_std, average, color = 'blue', alpha =.25, label="toiletHX711")
 #
 x_list3, y_list3 = unpack_and_append_data(filenames3, x_list3, y_list3, skiprow = 1)
 x_list3, y_list3 = threshold_locater_and_posterior_trimmer(x_list3, y_list3, weight_threshold)
@@ -120,7 +127,7 @@ print(modifiedx_length_list3)
 print(modifiedy_length_list3)
 total3, average = total_and_averager(y_list3, total3)
 std, above_std, below_std = std_calculator(average, y_list3)
-matplotlib_plotter(x_axis3, above_std, below_std, average, color = 'green', alpha =.25, label="floorhx711")
+matplotlib_plotter(x_axis3, above_std, below_std, average, color = 'green', alpha =.25, label="floorHX711")
 #
 x_list4, y_list4 = unpack_and_append_data(filenames4, x_list4, y_list4, skiprow = 1)
 x_list4, y_list4 = threshold_locater_and_posterior_trimmer(x_list4, y_list4, weight_threshold)
@@ -129,9 +136,11 @@ print(d4)
 x_axis4, x_list4, y_list4, modifiedx_length_list4, modifiedy_length_list4 = anterior_trimmer_x_and_y(d4, x_list4, y_list4, modifiedx_length_list4, modifiedy_length_list4)
 total4, average = total_and_averager(y_list4, total4)
 std, above_std, below_std = std_calculator(average, y_list4)
-matplotlib_plotter(x_axis4, above_std, below_std, average, color = 'black', alpha =.25, label="toiletads")
+matplotlib_plotter(x_axis4, above_std, below_std, average, color = 'black', alpha =.25, label="toiletADS1232")
 
 plt.legend(loc="best")
+plt.title("Weight (kg) vs Time (ms) ")
+plt.xlabel("Time (ms)")
+plt.ylabel("Weight (kg)")
 plt.show()
-#
 #
