@@ -1,3 +1,7 @@
+'''
+scatter plot with hunched and straight on the x axis and the dots above. It is normalized.
+'''
+
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
