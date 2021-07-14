@@ -1,3 +1,7 @@
+'''
+Test to practice taking the average of the numbers in some arrays. Not important.
+'''
+
 from matplotlib import pyplot as plt
 import statistics
 
