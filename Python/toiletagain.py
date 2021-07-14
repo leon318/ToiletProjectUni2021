@@ -1,35 +1,54 @@
+'''
+Gathers serial data and stores to csv
+'''
 
-
-#read the serial data and print it as line
 import serial
 import time
+import pandas as pd
+from pandas import read_csv
 import os
+import csv
+project_dir1 = "/Users/Leon/Documents/ToiletProjectUni2021/Python" # Put in the directory of where this program is in
+project_dir2 = "/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/laura(hunched)" #Put the directory here of where you want to send it
+filename = "laura(hunched)T-9.csv"
+h = os.path.join(project_dir1, filename)
+ser = serial.Serial('/dev/tty.usbmodem14201', baudrate=9600, timeout=.1) #Put the serial port here.
 
-
-ser = serial.Serial('/dev/tty.usbmodem14201', baudrate=9600, timeout=.1)
-
-weight = [5]
 counter = 0
-f = open("Exp4,T-8.csv", "w")
+f = open(filename, "w")
+
 time.sleep(4)
-while counter < 100:
+while counter < 156:
+    if counter == 0:
+        f.write(",".join(['time', 'floor_scale', 'toilet_scale']))
     arduinoData = ser.readline()
-    string = arduinoData.decode()  # convert the byte string to a unicode string
-    num = str(string)  # convert the unicode string to an int
+    string = arduinoData.decode()
+    num = str(string)
     print(num)
-    weight.append(num)
     f.write(str(num))
-    f.write(str("\n"))
     counter += 1
-From1 = "/Users/Leon/Documents/ToiletProjectUni2021/Python/Exp4,T-8.csv"
-To1 = "/Users/Leon/Documents/ToiletProjectUni2021/Exp4(Leon_Standing_ADS)/Exp4,T-8.csv"
+
+#f.to_csv("Exp5,T-11.csv", header=['Time', 'Floorscale', 'Toilet Scale'], index=False)
+
+# with open(h, 'w') as f:
+#     writer = csv.writer(f)
+#     writer.writerow(["Time", "Toiletscale"])
+#     with open(h, 'r') as f:
+#             reader = csv.reader(f)
+#             writer.writerows(row for row in reader)
+    # with open(h, 'r', newline='') as f:
+    #         reader = csv.reader(f)
+    #         writer.writerows(row[:1] + row[1:] for row in reader)
+From1 = (os.path.join(project_dir1, filename))
+To1 = (os.path.join(project_dir2, filename))
 os.rename(From1,To1)
 
 
-#with open("/Users/Leon/Documents/ToiletProjectUni2021/Experiment2(Leon_Standing_ADS)/Experiment2,T-800.csv") as f:
+
+#with open("/Users/Leon/Documents/ToiletProjectUni2021/Experiment2(Leon_Standing_ADS)/Experiment2,T-1100.csv") as f:
  #   lines = f.readlines()  # read
 #lines[0] = ("0.0" + "\n")  # you can replace zero with any line number
-#with open("/Users/Leon/Documents/ToiletProjectUni2021/Experiment2(Leon_Standing_ADS))/Experiment2,T-800.csv", "w") as f:
+#with open("/Users/Leon/Documents/ToiletProjectUni2021/Experiment2(Leon_Standing_ADS))/Experiment2,T-1100.csv", "w") as f:
    # f.writelines(lines) #write back
 
 
