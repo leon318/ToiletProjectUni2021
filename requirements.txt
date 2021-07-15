@@ -1,0 +1,12 @@
+# Python libraries for my project
+pyserial
+matplotlib
+numpy
+pandas>=1.2.0
+plotly
+notebook
+keras
+tensorflow
+seaborn
+
+
