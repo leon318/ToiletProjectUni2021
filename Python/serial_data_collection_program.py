@@ -8,8 +8,8 @@ import time
 import os
 
 project_dir1 = "/Users/Leon/Documents/ToiletProjectUni2021/Python" # Put in the directory of where this program is in
-project_dir2 = "/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/laura(hunched)" #Put the directory here of where you want to send it
-filename = "laura(hunched)T-9.csv"
+project_dir2 = "/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/papi(hunched)" #Put the directory here of where you want to send it
+filename = "papi(hunched)T-9.csv"
 h = os.path.join(project_dir1, filename)
 ser = serial.Serial('/dev/tty.usbmodem14201', baudrate=9600, timeout=.1) #Put the serial port here.
 

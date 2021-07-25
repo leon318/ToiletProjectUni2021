@@ -24,6 +24,7 @@ std_list_straight_toilet = list()
 for i, name in enumerate(names):
     for j, position in enumerate(positions):
         a = df[(df['Person'] == names[i]) & (df['Position'] == positions[j])]
+        print(a)
         tot = a['Total_Weight'].mean()
         norm_floor_data = a['Floor_Weight']/tot
         norm_toilet_data = a['Toilet_Weight']/tot

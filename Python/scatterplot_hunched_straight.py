@@ -34,6 +34,7 @@ color_dict = { 'anjany' : 'purple',
 names = ('anjany', 'aron', 'kyriakos', 'leon', 'matteo')
 for i, name in enumerate(names):
     a = df[(df['Person'] == names[i])]
+    print(a)
     plt.scatter(x=a.Position,
                 y=a.Toilet_Weight/(a.Total_Weight),
                 s=5,

@@ -14,8 +14,6 @@ color_list = ('purple','red','green','orange','blue')
 fname = os.path.join(project_dir,
                      filename)
 
-
-
 df = pd.read_csv(fname)
 names = ('anjany', 'aron', 'kyriakos', 'leon', 'matteo')
 positions = ('hunched', 'straight')

@@ -3,16 +3,17 @@ This program also processes the data. It does not use the functions yet. In orde
 you will get each persons' graphs. Each person will have two, one straight and one hunched. Change the words hunched and straight in
 the variables in order to get two graphs.
 This plots 3 curves: total curve, floor curve, seat curve.
+Use this to make 2 charts for everyone.
 '''
 import glob
 import numpy as np
 import matplotlib.pyplot as plt
 import os
 # -------------------- user input ------------------------
-project_dir = "/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/aron(straight)"
-filename = "aron(straight)T-*.csv"
-number_of_files = 20
-weight_threshold = .05
+project_dir = "/Users/Leon/Documents/ToiletProjectUni2021/feature_extraction/papi(straight)"
+filename = "papi(straight)T-*.csv"
+number_of_files = 9
+weight_threshold = .3
 # -------------------- program ------------------------
 # print(glob.glob('/Users/Leon/Documents/ToiletProjectUni2021/Exp4(Leon_Standing_ADS)/Exp4,T-*.csv'))
 filenames = sorted(glob.glob(os.path.join(project_dir, filename)))
@@ -135,7 +136,7 @@ plt.fill_between(x_axis, averagez, above_stdz, color='blue', alpha=0.25)
 
 plt.plot(x_axis, (averagey+averagez), color = 'red', label = 'total_weight')
 
-plt.title("Weight (kg) vs Time (ms) (Straight Posture Aron)")
+plt.title("Weight (kg) vs Time (ms) (Straight Posture Papi)")
 plt.xlabel("Time (ms)")
 plt.ylabel("Weight (kg)")
 plt.legend(loc="best")

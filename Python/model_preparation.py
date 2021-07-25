@@ -1,7 +1,7 @@
 import numpy as np
-from Python.data_analysis_functions.feature_position_tuple_list_generator import tuple_list_generator
-from Python.data_analysis_functions.array2d_generator import array_2d_generator
-from Python.data_analysis_functions.array_randomizer import array_randomizer_and_tupple_generator
+from Python.machine_learning_prep_functions.feature_position_tuple_list_generator import tuple_list_generator
+from Python.machine_learning_prep_functions.array2d_generator import array_2d_generator
+from Python.machine_learning_prep_functions.array_randomizer import array_randomizer_and_tupple_generator
 final_list, input_integer, encoded, position_and_person = tuple_list_generator()
 # print(final_list)
 feature_matrix, position_matrix = array_2d_generator(final_list)
